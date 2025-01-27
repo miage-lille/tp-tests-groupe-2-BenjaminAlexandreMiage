@@ -96,14 +96,12 @@ describe('PrismaWebinarRepository', () => {
 
             // ACT
             await repository.create(webinar);
-            await repository.findById('webinar-id');
 
             // ASSERT
-            const maybeWebinar = await prismaClient.webinar.findUnique({
-                where: { id: 'webinar-id' },
-            });
 
-            expect(maybeWebinar).toEqual({
+            const web = await repository.findById('webinar-id');
+
+            expect(web?.props).toEqual({
                 id: 'webinar-id',
                 organizerId: 'organizer-id',
                 title: 'Webinar title',
@@ -141,11 +139,10 @@ describe('PrismaWebinarRepository', () => {
             await repository.update(newWebinar);
 
             // ASSERT
-            const maybeWebinar = await prismaClient.webinar.findUnique({
-                where: { id: 'webinar-id' },
-            });
 
-            expect(maybeWebinar).toEqual({
+            const web = await repository.findById('webinar-id');
+
+            expect(web?.props).toEqual({
                 id: 'webinar-id',
                 organizerId: 'organizer-id',
                 title: 'title',
